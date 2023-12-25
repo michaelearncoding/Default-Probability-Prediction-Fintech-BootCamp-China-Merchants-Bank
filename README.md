@@ -4,6 +4,8 @@ Hi, this is a ongoing project for further research on competition that held in F
 
 The data will not provided but the related training model would be present in here.
 
+# `Project Summary`
+
 Determine the likelihood of loan default for each customer, based on customer profile, historical transactions over
 140,000 records in the last 60 days and digital activities in last 30 days, conduct data cleaning (impute missing value)
 feature engineering, train model, parameter tuning using Python
