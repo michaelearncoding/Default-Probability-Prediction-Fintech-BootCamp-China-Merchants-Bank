@@ -14,30 +14,43 @@ Leverage machine learning algorithms including Xgboost and Gradient Boosting, ou
 models based on accuracy and robustness
 
 
-1. Data Pre-processing
+# `Code description`
 
-Data preprocessing
-The preprocessing part mainly consists of two operations: filling in missing values and field variable conversion.
 
-Missing value filling: Only the tag table has missing values, so fill in the tag
+0_0preprocessing_tag.py: tag table preprocessing 
 
-- Guessed that “\N” was a missing value, and filled it directly with “\N”. After analysis, I found that the number of “\N” in multiple fields was basically the same (those who have done it should know, those five hundred users). If all are filled with “\N”, the proportion distribution of field values will be changed, so the final filling rule is:
+0_1preprocessing_trd.py: trd table 
 
-deg_cd: Fill with ~ 
+preprocessing 1_0trd_id_feature.py: feature extraction from trd table (by id) 1_1trd_time_feature.py: feature extraction from trd table (by id and time period)
 
-edu_deg_cd: Fill with ~  
+1_2trd_R_feature.py: R-type feature extraction from trd table 
 
-acdm_deg_cd: Fill with “\N” 
+2_0lgb.py: single model lightgbm, five-fold cross-validation training 
 
-atdd_type: Fill with “\N” 
+2_1xgb.py: single model xgboost, five-fold cross-validation training 
 
-- Field variable conversion
+3_0model_stack.py: model fusion, get the final result 
 
-For categorical fields, such as education, degree, gender, identification, etc., use labelencoder encoding method; For level codes and continuous fields, such as card holding days, books, risk tolerance level, etc., convert “\N” to 0 or -1 (the same idea as filling in missing values, ensuring that the proportion of those five hundred users remains unchanged after conversion), and convert the field type to integer. 
+parameter.py: path parameter file method.py: common function methods 
 
-- Other
+run.py: one-click execution of pipeline, preprocessing, feature extraction, model training and fusion, from raw data to final result. 
 
-Unify 0 and 0.0 in atdd_type to 0, and 1 and 1.0 to 1. The time fields in the trd table and the beh table are sorted out, and the year, month, day, hour, week, and whether it is a weekend are extracted, which is convenient for extracting user features by time dimension later.
+Environment and dependent libraries Python 3.5.4 Pandas 0.25.3 Numpy 1.17.0 Sklearn 0.21.3 Lightgbm 2.2.3 Xgboost 0.81
+
+Path description 
+
+
+├─Final_code: py code file
+
+└─data
+
+​ ├─RawData: original csv file (including training set and test set)
+
+​ ├─TempData: preprocessing file
+
+​ ├─EtlData: feature file
+
+​ └─Result: generate the final result submission.csv
 
 
 
